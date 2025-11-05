@@ -1,0 +1,17 @@
+{
+  "name": "kat-dieet",
+  "version": "1.0.0",
+  "description": "Web applicatie voor het bijhouden van kat voeding",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "express": "^5.1.0"
+  }
+}
