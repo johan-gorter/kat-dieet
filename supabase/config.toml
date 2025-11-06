@@ -1,0 +1,20 @@
+# Supabase Configuration
+# Deze file wordt gebruikt door de Supabase CLI
+
+[api]
+enabled = true
+port = 54321
+schemas = ["public", "storage", "graphql_public"]
+extra_search_path = ["public", "extensions"]
+max_rows = 1000
+
+[db]
+port = 54322
+major_version = 15
+
+[studio]
+enabled = true
+port = 54323
+
+[functions.kat-dieet]
+verify_jwt = false
