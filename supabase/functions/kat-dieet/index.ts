@@ -3,11 +3,35 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import * as bcrypt from "https://deno.land/x/bcrypt@v0.4.1/mod.ts";
 
-// Supabase KV Store voor data opslag
-const kv = await Deno.openKv();
+// TypeScript interfaces
+interface Feeding {
+  date: string;
+  timestamp: string;
+  weightBefore: number;
+  weightAfter: number;
+  amount: number;
+}
+
+interface AppData {
+  password: string | null;
+  dailyLimit: number;
+  fullBagWeight: number;
+  emptyBagWeight: number;
+  currentBagWeight: number;
+  feedings: Feeding[];
+}
+
+// Initialize KV Store with error handling
+let kv: Deno.Kv;
+try {
+  kv = await Deno.openKv();
+} catch (error) {
+  console.error("Failed to open KV store:", error);
+  throw new Error("Database initialization failed");
+}
 
 // Initialize data structure
-const initData = {
+const initData: AppData = {
   password: null,
   dailyLimit: 50,
   fullBagWeight: 810,
@@ -21,21 +45,21 @@ function getTodayString(): string {
   return new Date().toISOString().split('T')[0];
 }
 
-function getTodayFeedings(data: any) {
+function getTodayFeedings(data: AppData): Feeding[] {
   const today = getTodayString();
-  return data.feedings.filter((f: any) => f.date === today);
+  return data.feedings.filter((f: Feeding) => f.date === today);
 }
 
-async function loadData() {
+async function loadData(): Promise<AppData> {
   const entry = await kv.get(["kat-dieet-data"]);
   if (entry.value) {
-    return entry.value;
+    return entry.value as AppData;
   }
   await saveData(initData);
   return initData;
 }
 
-async function saveData(data: any) {
+async function saveData(data: AppData): Promise<void> {
   await kv.set(["kat-dieet-data"], data);
 }
 
@@ -121,7 +145,7 @@ serve(async (req: Request) => {
 
       const data = await loadData();
       const todayFeedings = getTodayFeedings(data);
-      const totalEaten = todayFeedings.reduce((sum: number, f: any) => sum + f.amount, 0);
+      const totalEaten = todayFeedings.reduce((sum: number, f: Feeding) => sum + f.amount, 0);
       const remaining = data.dailyLimit - totalEaten;
 
       return new Response(
@@ -179,7 +203,7 @@ serve(async (req: Request) => {
       await saveData(data);
 
       const todayFeedings = getTodayFeedings(data);
-      const totalEaten = todayFeedings.reduce((sum: number, f: any) => sum + f.amount, 0);
+      const totalEaten = todayFeedings.reduce((sum: number, f: Feeding) => sum + f.amount, 0);
       const remaining = data.dailyLimit - totalEaten;
 
       return new Response(

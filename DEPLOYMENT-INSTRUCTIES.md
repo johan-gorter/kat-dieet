@@ -44,7 +44,8 @@
 5. **Kopieer het token direct** (je ziet het maar 1x!)
 
 ### 4️⃣ GitHub Secrets Configureren
-1. Ga naar: [https://github.com/johan-gorter/kat-dieet/settings/secrets/actions](https://github.com/johan-gorter/kat-dieet/settings/secrets/actions)
+1. Ga naar je GitHub repository → Settings → Secrets and variables → Actions
+   (URL: `https://github.com/[OWNER]/[REPO]/settings/secrets/actions`)
 2. Klik "New repository secret" voor elk van deze secrets:
 
 | Secret Naam | Waarde |
@@ -58,8 +59,7 @@
 **Voor Test:**
 ```bash
 # Optie A: Via GitHub Actions UI
-# Ga naar: https://github.com/johan-gorter/kat-dieet/actions
-# Selecteer "Deploy to Test Environment" → "Run workflow"
+# Ga naar je repository → Actions → "Deploy to Test Environment" → "Run workflow"
 
 # Optie B: Push naar develop branch
 git checkout -b develop
@@ -69,8 +69,7 @@ git push -u origin develop
 **Voor Productie:**
 ```bash
 # Optie A: Via GitHub Actions UI
-# Ga naar: https://github.com/johan-gorter/kat-dieet/actions
-# Selecteer "Deploy to Production" → "Run workflow"
+# Ga naar je repository → Actions → "Deploy to Production" → "Run workflow"
 
 # Optie B: Push naar main branch
 git push origin main
