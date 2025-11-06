@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kat Dieet Tracker</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Login Screen -->
+        <div id="loginScreen" class="screen">
+            <div class="card">
+                <h1>🐱 Kat Dieet</h1>
+                <p class="subtitle">Voer het wachtwoord in om door te gaan</p>
+                <form id="loginForm">
+                    <input type="password" id="passwordInput" placeholder="Wachtwoord" required>
+                    <button type="submit">Inloggen</button>
+                </form>
+                <div id="loginError" class="error"></div>
+                <div class="qr-info">
+                    <p>💡 Scan de QR-code om automatisch in te loggen</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main App Screen -->
+        <div id="appScreen" class="screen" style="display: none;">
+            <div class="header">
+                <h1>🐱 Kat Dieet Tracker</h1>
+                <button id="logoutBtn" class="logout-btn">Uitloggen</button>
+            </div>
+
+            <!-- Status Display -->
+            <div class="card status-card">
+                <h2>Vandaag</h2>
+                <div class="status-grid">
+                    <div class="status-item">
+                        <div class="status-label">Gegeten</div>
+                        <div class="status-value" id="eatenAmount">0 g</div>
+                    </div>
+                    <div class="status-item">
+                        <div class="status-label">Nog toegestaan</div>
+                        <div class="status-value" id="remainingAmount">50 g</div>
+                    </div>
+                    <div class="status-item full-width">
+                        <div class="status-label">Huidige zakgewicht</div>
+                        <div class="status-value" id="currentWeight">810 g</div>
+                    </div>
+                </div>
+                <div id="warningMessage" class="warning"></div>
+            </div>
+
+            <!-- Feeding Form -->
+            <div class="card">
+                <h2>Voer Geven</h2>
+                <form id="feedingForm">
+                    <div class="form-group">
+                        <label for="weightBefore">Gewicht vóór vullen (gram)</label>
+                        <input type="number" id="weightBefore" step="0.1" min="10" max="810" required>
+                        <small>Weeg de zak voordat je het bakje vult</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="weightAfter">Gewicht ná vullen (gram)</label>
+                        <input type="number" id="weightAfter" step="0.1" min="10" max="810" required>
+                        <small>Weeg de zak nadat je het bakje hebt gevuld</small>
+                    </div>
+                    <button type="submit">Invoeren</button>
+                </form>
+                <div id="feedingError" class="error"></div>
+            </div>
+
+            <!-- Today's Feedings -->
+            <div class="card">
+                <h2>Voedingen Vandaag</h2>
+                <div id="feedingsList"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
